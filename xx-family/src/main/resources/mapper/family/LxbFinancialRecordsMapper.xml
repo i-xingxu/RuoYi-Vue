@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.family.mapper.LxbFinancialRecordsMapper">
+
+    <resultMap type="LxbFinancialRecords" id="LxbFinancialRecordsResult">
+        <result property="id"    column="id"    />
+        <result property="incomeExpense"    column="income_expense"    />
+        <result property="expenseCategory"    column="expense_category"    />
+        <result property="amount"    column="amount"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="billTime"    column="bill_time"    />
+    </resultMap>
+
+    <sql id="selectLxbFinancialRecordsVo">
+        select id, income_expense, expense_category, amount, remark, create_by, create_time, update_by, update_time, bill_time from lxb_financial_records
+    </sql>
+
+    <select id="selectLxbFinancialRecordsList" parameterType="LxbFinancialRecords" resultMap="LxbFinancialRecordsResult">
+        <include refid="selectLxbFinancialRecordsVo"/>
+        <where>
+            <if test="incomeExpense != null  and incomeExpense != ''"> and income_expense = #{incomeExpense}</if>
+            <if test="expenseCategory != null  and expenseCategory != ''"> and expense_category = #{expenseCategory}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="billTime != null "> and bill_time = #{billTime}</if>
+        </where>
+    </select>
+
+    <select id="selectLxbFinancialRecordsById" parameterType="Long" resultMap="LxbFinancialRecordsResult">
+        <include refid="selectLxbFinancialRecordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLxbFinancialRecords" parameterType="LxbFinancialRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into lxb_financial_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="incomeExpense != null and incomeExpense != ''">income_expense,</if>
+            <if test="expenseCategory != null and expenseCategory != ''">expense_category,</if>
+            <if test="amount != null">amount,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="billTime != null">bill_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="incomeExpense != null and incomeExpense != ''">#{incomeExpense},</if>
+            <if test="expenseCategory != null and expenseCategory != ''">#{expenseCategory},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="billTime != null">#{billTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateLxbFinancialRecords" parameterType="LxbFinancialRecords">
+        update lxb_financial_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="incomeExpense != null and incomeExpense != ''">income_expense = #{incomeExpense},</if>
+            <if test="expenseCategory != null and expenseCategory != ''">expense_category = #{expenseCategory},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="billTime != null">bill_time = #{billTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLxbFinancialRecordsById" parameterType="Long">
+        delete from lxb_financial_records where id = #{id}
+    </delete>
+
+    <delete id="deleteLxbFinancialRecordsByIds" parameterType="String">
+        delete from lxb_financial_records where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

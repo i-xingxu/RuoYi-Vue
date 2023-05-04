@@ -161,6 +161,20 @@ export const dynamicRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
+  },
+  {
+    path: '/money',
+    component: Layout,
+    hidden: true,
+    permissions: ['system:user:edit'],
+    children: [
+      {
+        path: 'addMoney',
+        component: () => import('@/views/family/addMoney'),
+        name: '记一笔',
+        meta: { title: '记一笔' }
+      }
+    ]
   }
 ]
 
